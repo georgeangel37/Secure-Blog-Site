@@ -1,0 +1,117 @@
+<%- include("header_logged_out"); -%>
+
+<style>
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /*firefox*/
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+</style>
+
+<div
+  class="container text-center"
+  style="max-width: 330px; vertical-align: middle"
+>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <h1>Sign Up</h1>
+  <form action="signup" method="post">
+    <div class="container-fluid">
+      <div class="form-group text-left">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="firstname"
+          value="<%- firstname %>"
+          minlength="1"
+          maxlength="51"
+          required
+        />
+      </div>
+      <div class="form-group text-left">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="lastname"
+          value="<%- lastname %>"
+          minlength="1"
+          maxlength="51"
+          required
+        />
+      </div>
+      <div class="form-group text-left">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          value="<%- username %>"
+          minlength="1"
+          maxlength="51"
+          required
+        />
+      </div>
+      <div class="form-group text-left">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          value="<%- email %>"
+          minlength="4"
+          maxlength="51"
+          required
+        />
+      </div>
+      <div class="form-group text-left">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          minlength="8"
+          maxlength="15"
+          required
+        />
+      </div>
+      <p><%- errMessage %></p>
+      <div class="form-group text-center">
+        <img src="<%= qr %>" alt="QR Code" />
+      </div>
+      <div class="form-group text-left">
+        <label for="otp">Enter Passcode</label>
+        <input
+          type="number"
+          class="form-control"
+          name="otp"
+          value=""
+          minlength="6"
+          maxlength="6"
+          required
+        />
+      </div>
+    </div>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <input
+      type="hidden"
+      class="form-control"
+      name="secret"
+      value="<%- secret %>"
+      required
+    />
+    <input type="hidden" name="qr_url" value="<%=qr %>" />
+    <div
+      class="g-recaptcha"
+      data-sitekey="6LemCOolAAAAAOjL7KNAU6CZiQqCGZdmuLaDPDPF"
+      data-action="REGISTER"
+    ></div>
+    <button type="submit" class="btn btn-dark">Sign Up</button>
+  </form>
+</div>
+<%- include("footer"); -%>

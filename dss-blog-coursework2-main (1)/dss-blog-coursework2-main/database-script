@@ -1,0 +1,56 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE TABLE users (
+   	userid UUID DEFAULT uuid_generate_v4(),
+	username VARCHAR ( 255 ) UNIQUE NOT NULL,
+	password VARCHAR ( 255 ) NOT NULL,
+	email text UNIQUE NOT NULL,
+	firstname text NOT NULL,
+	lastname text NOT NULL,
+	mfasecret text UNIQUE NOT NULL,
+	mfa_lastuse TIMESTAMP NOT NULL,
+	PRIMARY KEY (userid)
+);
+
+alter table users
+  	add constraint email_length_min check (length(email) >= 4),
+	add constraint email_length_max check (length(email) <= 2500),
+	add constraint username_length_min check (length(username) >= 1),
+	add constraint username_length_max check (length(username) <= 50),
+	add constraint password_length_min check (length(password) >= 8),
+	add constraint password_length_max check (length(password) <= 255),
+	add constraint fname_length_min check (length(firstname) >= 1),
+	add constraint fname_length_max check (length(firstname) <= 2500),
+	add constraint lname_length_min check (length(lastname) >= 1),
+	add constraint lname_length_max check (length(lastname) <= 2000),
+	add constraint mfa_length_min check (length(mfasecret) >= 52),
+	add constraint mfa_length_max check (length(mfasecret) <= 2500);
+
+CREATE TABLE posts (
+   	id UUID DEFAULT uuid_generate_v4(),
+	user_id uuid NOT NULL,
+	title VARCHAR (200) NOT NULL,
+	content VARCHAR (5000) NOT NULL,
+	post_time TIMESTAMP NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (user_id)
+      REFERENCES users (userid)
+);
+
+alter table posts
+  	add constraint title_length_min check (length(title) >= 1),
+	add constraint title_length_max check (length(title) <= 200),
+	add constraint content_length_min check (length(content) >= 1),
+	add constraint content_length_max check (length(content) <= 5000);
+
+CREATE TABLE logincount(
+	id UUID DEFAULT uuid_generate_v4(),
+	email text NOT NULL,
+	logintime TIMESTAMP NOT NULL,
+	PRIMARY KEY (id)
+);
+
+alter table logincount
+  	add constraint email_length_min check (length(email) >= 4),
+	add constraint email_length_max check (length(email) <= 2500);

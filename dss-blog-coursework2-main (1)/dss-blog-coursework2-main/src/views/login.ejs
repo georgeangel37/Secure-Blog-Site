@@ -1,0 +1,48 @@
+<%- include("header_logged_out"); -%>
+
+<style>
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /*firefox*/
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+</style>
+
+<div
+  class="container text-center"
+  style="max-width: 330px; vertical-align: middle"
+>
+  <h1>Login</h1>
+  <form
+    action="login"
+    method="post"
+  >
+    <div class="form-group text-left">
+      <label for="email">Email</label>
+      <% if(status === 401){ %>
+        <input type="email" class="form-control" name="email" value="<%- email %>" minlength="4" maxlength="51" required/>
+      <% } else { %>
+        <input type="email" class="form-control" name="email" required/>
+      <% } %>
+    </div>
+    <div class="form-group text-left">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" required/>
+    </div>
+    <% if(status === 401){ %>
+      <p>Incorrect Email and/or Password</p>
+    <% } %>
+    <% if(status === 429){ %>
+      <p>Too many incorrect login attempts. Try again Later.</p>
+    <% } %>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+    <button type="submit" class="btn btn-dark" id="login-form-submit">Login</button>
+    <a class="btn btn-primary" href="/signup">Sign Up</a>
+  </form>
+</div>
+<%- include("footer"); -%>

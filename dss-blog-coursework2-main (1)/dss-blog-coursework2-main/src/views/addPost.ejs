@@ -1,0 +1,35 @@
+<%- include("header"); -%>
+<div class="container" style="vertical-align: center">
+  <h1 class="text-center" style="margin: 25px">Add Post</h1>
+  <form class="" action="/addPost" method="post">
+    <div
+      class="card box-shadow form-group mx-auto mw-50"
+      style="margin-bottom: 20px"
+    >
+      <div class="card-header">
+        <h4>Title</h4>
+        <input class="form-control" type="text" minLength="1" maxlength="40" required name="title" 
+        <% if(status===401) { %>value=<%-title%> <% } %> >
+      </div>
+      <div class="card-body">
+        <h4>Post</h4>
+        <textarea class="form-control" name="content" rows="5" cols="30" minLength="1" maxlength="1000" required>
+<% if(status === 401) { %><%-content%><% } %></textarea>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+        <button
+          class="btn btn-primary"
+          style="margin-top: 10px"
+          type="submit"
+          name="button"
+        >
+          Add
+        </button>
+        <% if(status === 401){ %>
+        <p style="color: red">Error: Please try again</p>
+        <% } %>
+      </div>
+    </div>
+  </form>
+</div>
+
+<%- include("footer"); -%>

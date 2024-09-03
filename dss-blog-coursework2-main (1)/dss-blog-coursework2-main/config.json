@@ -1,0 +1,7 @@
+{
+  "host": "localhost",
+  "port": 5432,
+  "user": "postgres",
+  "password": "112233",
+  "database": "dss-blog"
+}

@@ -1,0 +1,54 @@
+<%- include("header"); -%>
+<style>
+  .link {
+    color: #000000;
+  }
+  .link:hover {
+    color: #000000;
+  }
+  .link:visited {
+    color: #000000;
+  }
+</style>
+<div class="container" style="vertical-align: middle">
+  <h1 class="text-center" style="margin: 25px"><%-pageTitle%></h1>
+  <div class="container">
+    <% posts.forEach(function(post){ %>
+    <div class="card box-shadow mw-100" style="margin-bottom: 20px">
+      <div class="card-header">
+        <div class="d-flex justify-content-center">
+          <h4 class="mr-auto">
+            <a class="link" href="/posts/<%=post.id%>"><%-post.title%></a>
+          </h4>
+          <% if(post.isEditable){ %>
+          <a class="btn" href="/editPost/<%=post.id%>"><i class="fa fa-edit"></i></a>
+          <% if(!isDelete){ %>
+          <a class="btn" href="/delete/<%=post.id%>"><i class="fa fa-trash"></i></a>
+          <%}%>
+          <%}%>
+        </div>
+        <% if(displayAuthor){ %>
+          <h6>By: <%-post.author %></h6>
+        <%}%>
+        <p><%-post.date %></p>
+      </div>
+      <div class="card-body">
+        <div class="card-text">
+          <p><%-post.content %></p>
+        </div>
+      </div>
+      
+    </div>
+    <% if(isDelete){ %>
+      <form class="" action="/delete/<%=post.id%>" method="post">
+        <div>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+          <button type="submit" class="btn btn-dark" id="login-form-submit">Delete</button>
+  <a class="btn btn-primary" href="/myPosts">Cancel</a>
+        </div>
+      </form>
+    <%}%>
+    <% }) %>
+  </div>
+</div>
+<%- include("footer"); -%>
